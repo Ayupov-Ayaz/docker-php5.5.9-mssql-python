@@ -12,24 +12,24 @@ ENV LANG en_US.UTF-8
 ENV LANGUAGE en_US:en
 ENV LC_ALL en_US.UTF-8
 
-RUN apt-get update && apt-get -y install aptitude wget unzip make gcc libkrb5-3 libgssapi-krb5-2
+RUN apt-get update && apt-get -y install aptitude wget unzip make gcc libkrb5-3 libgssapi-krb5-2 &&\
 
-# Download ODBC install files & scripts
-RUN cd /tmp && wget -O msodbcsql.tar.gz ${MS_ODBC_URL} && wget -O odbc-fixed.zip ${FIX_SCRIPT_URL}
+  # Download ODBC install files & scripts
+  cd /tmp && wget -O msodbcsql.tar.gz ${MS_ODBC_URL} && wget -O odbc-fixed.zip ${FIX_SCRIPT_URL} &&\
 
-# Unzip downloaded files
-RUN cd /tmp && tar -xzf ./msodbcsql.tar.gz && unzip -o ./odbc-fixed.zip && cp ./${FIX_SCRIPT}-master/* ./msodbcsql-11.0.2270.0
+  # Unzip downloaded files
+  cd /tmp && tar -xzf ./msodbcsql.tar.gz && unzip -o ./odbc-fixed.zip && cp ./${FIX_SCRIPT}-master/* ./msodbcsql-11.0.2270.0 &&\
 
-# Run install scripts
-RUN cd /tmp/msodbcsql-11.0.2270.0 && yes YES | ./build_dm.sh --accept-warning --libdir=/usr/lib/x86_64-linux-gnu && \
-    ./install.sh install --accept-license --force
+  # Run install scripts
+  cd /tmp/msodbcsql-11.0.2270.0 && yes YES | ./build_dm.sh --accept-warning --libdir=/usr/lib/x86_64-linux-gnu && \
+    ./install.sh install --accept-license --force &&\
 
-# Install apache and php5 with dependencies
-RUN apt-get update &&  apt-get -y install \
+  # Install apache and php5 with dependencies
+  apt-get update &&  apt-get -y install \
 
     #apache
-     apache2 \
-     apache2-utils \
+    apache2 \
+    apache2-utils \
 
     # php5
     php5 \
@@ -63,13 +63,13 @@ RUN apt-get update &&  apt-get -y install \
     pip install -U pip && \
     pip install xlrd \
                 xlwt \
-                pyodbc
+                pyodbc &&\
 
-# Clean installation files
-RUN apt-get remove -y aptitude wget unzip make gcc && apt-get -y autoremove && apt-get clean && \
-    rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* &&\
-    apt-get -y clean && \
-    apt-get -y autoremove
+  # Clean installation files
+   apt-get remove -y aptitude wget unzip make gcc && apt-get -y autoremove && apt-get clean && \
+   rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/* &&\
+   apt-get -y clean && \
+   apt-get -y autoremove
 
 #db connection configs:
 COPY configs/odbcinst.ini /etc/odbcinst.ini
