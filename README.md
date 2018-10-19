@@ -9,7 +9,7 @@
 
 ##### Образ состоит из: 
 
-> `apache2` + `php:5.5.9` + `mssql:latest`
+> `apache2` + `php:5.5.9` + `mssql:latest` + `python`
 
 
 ##### Требования
