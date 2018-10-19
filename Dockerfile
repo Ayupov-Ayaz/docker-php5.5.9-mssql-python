@@ -1,5 +1,5 @@
 FROM ubuntu:trusty
-MAINTAINER ayaz ayupov <aayupov@nefco.ru>
+MAINTAINER ayaz ayupov <ayaz.ayupov@gmail.com>
 
 # Downloads URLs
 ENV MS_ODBC_URL https://download.microsoft.com/download/B/C/D/BCDD264C-7517-4B7D-8159-C99FC5535680/RedHat6/msodbcsql-11.0.2270.0.tar.gz
